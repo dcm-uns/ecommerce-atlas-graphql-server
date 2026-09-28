@@ -36,6 +36,22 @@ Los filtros `name` y `description` buscan texto sin distinguir mayúsculas; `cat
 
 ```graphql
 mutation {
+  createProduct(input: {
+    name: "Café molido"
+    price: 5.5
+    stock: 20
+    category: "Bebidas"
+    description: "Paquete de 500 g"
+  }) {
+    id
+    name
+    price
+  }
+}
+```
+
+```graphql
+mutation {
   updateProduct(id: "ID_DEL_PRODUCTO", input: { price: 12.5, stock: 8 }) {
     id
     name

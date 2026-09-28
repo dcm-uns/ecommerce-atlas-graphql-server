@@ -36,6 +36,7 @@ export function createResolvers(Product) {
       product: (_parent, { id }) => Product.findById(id).exec()
     },
     Mutation: {
+      createProduct: (_parent, { input }) => new Product(input).save(),
       updateProduct: async (_parent, { id, input }) => {
         const updates = Object.fromEntries(
           Object.entries(input).filter(([, value]) => value !== undefined)

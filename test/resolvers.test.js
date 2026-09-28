@@ -94,3 +94,22 @@ test('el esquema ejecuta una consulta GraphQL completa', async () => {
   ]);
   await apollo.stop();
 });
+
+test('createProduct guarda un producto y devuelve el documento creado', async () => {
+  const input = { name: 'Café molido', price: 5.5, category: 'Bebidas' };
+  const savedProduct = { _id: 'new123', ...input, stock: 0, description: '' };
+  class Product {
+    constructor(values) {
+      this.values = values;
+    }
+
+    async save() {
+      assert.deepEqual(this.values, input);
+      return savedProduct;
+    }
+  }
+
+  const result = await createResolvers(Product).Mutation.createProduct(null, { input });
+
+  assert.equal(result, savedProduct);
+});
