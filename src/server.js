@@ -27,7 +27,7 @@ async function startServer() {
   app.get('/health', (_request, response) => response.json({ status: 'ok' }));
   app.use('/graphql', express.json(), expressMiddleware(apollo));
 
-  app.listen(port, () => {
+  app.listen(port, '0.0.0.0', () => {
     console.log(`Servidor GraphQL listo en http://localhost:${port}/graphql`);
   });
 }
