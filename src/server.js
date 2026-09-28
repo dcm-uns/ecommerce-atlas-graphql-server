@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { expressMiddleware } from '@as-integrations/express4';
 import mongoose from 'mongoose';
 import { Product } from './models/Product.js';
@@ -21,7 +22,15 @@ async function startServer() {
   );
 
   const app = express();
-  const apollo = new ApolloServer({ typeDefs, resolvers: createResolvers(Product) });
+  const apollo = new ApolloServer({
+    typeDefs,
+    resolvers: createResolvers(Product),
+    plugins: [
+      ApolloServerPluginLandingPageLocalDefault({
+        embed: { endpointIsEditable: false, runTelemetry: false }
+      })
+    ]
+  });
   await apollo.start();
 
   app.get('/health', (_request, response) => response.json({ status: 'ok' }));
