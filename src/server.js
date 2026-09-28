@@ -25,6 +25,7 @@ async function startServer() {
   const apollo = new ApolloServer({
     typeDefs,
     resolvers: createResolvers(Product),
+    introspection: true,
     plugins: [
       ApolloServerPluginLandingPageLocalDefault({
         embed: { endpointIsEditable: false, runTelemetry: false }
